@@ -11,7 +11,6 @@ import com.devsuperior.hrworker.repository.WorkerRepository;
 
 import lombok.RequiredArgsConstructor;
 
-
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class WorkerService {
