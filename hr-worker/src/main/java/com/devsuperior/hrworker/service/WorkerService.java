@@ -1,29 +1,36 @@
 package com.devsuperior.hrworker.service;
 
+import com.devsuperior.hrworker.entity.Worker;
+import com.devsuperior.hrworker.exception.WorkerNotFoundException;
+import com.devsuperior.hrworker.repository.WorkerRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.devsuperior.hrworker.entity.Worker;
-import com.devsuperior.hrworker.repository.WorkerRepository;
-
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class WorkerService {
 	private final WorkerRepository repository;
-	
+
+	public Worker save(final Worker worker){
+		return repository.save(worker);
+	}
+
+	public void delete(final Long id){
+		final Worker worker = findById(id);
+		repository.deleteById(worker.getId());
+	}
+
 	public Worker findById(Long id){
-		Optional<Worker> opWorker = repository.findById(id);
+		final Optional<Worker> opWorker = repository.findById(id);
 		
 		if(opWorker.isPresent()) {
 			return opWorker.get();
 		}
 		
-		throw new RuntimeException("Trabalhador não encontrado");
+		throw new WorkerNotFoundException("Trabalhador não encontrado");
 	}
 	
 	public List<Worker> findAll(){

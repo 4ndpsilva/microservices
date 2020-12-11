@@ -1,0 +1,16 @@
+version: '3.9'
+services:
+  db:
+    image: mysql
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3333:3306"
+    security_opt:
+      - seccomp:unconfined
+    volumes:
+      - hrworker_data:/var/lib/mysql
+
+volumes:
+  hrworker_data:
